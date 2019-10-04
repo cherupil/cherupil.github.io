@@ -1,5 +1,3 @@
-precision highp float;
-
 varying vec2 vTextureCoord;
 uniform sampler2D uTexture1;
 uniform sampler2D uTexture2;
