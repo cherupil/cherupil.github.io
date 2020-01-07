@@ -1,29 +1,15 @@
-varying vec2 vTextureCoord;
-uniform sampler2D uTexture1;
-uniform sampler2D uTexture2;
-uniform vec2 uvAspect;
-uniform float uTime;
-uniform float uProgress;
+uniform float time;
 
-mat2 rotate(float a) {
-	float s = sin(a);
-	float c = cos(a);
-	return mat2(c, -s, s, c);
-}
+varying vec3 vColor;
+varying vec3 vNormal;
 
 void main() {
-	vec3 map = vec3(vTextureCoord.x,vTextureCoord.y,1.0);
-	vec2 uv = (map.xy - 0.5)*uvAspect + 0.5;
+	vec3 light = vec3(0.);
+	vec3 skyColor = vec3(1.000, 1.000, 0.547);
+	vec3 groundColor = vec3(0.562, 0.275, 0.111);
+	vec3 lightDirection = normalize(vec3(0.0, -1.0, -1.0));
 
-	vec2 uvDivided = fract(uv*vec2(32.,1.));
+	light = mix(skyColor, groundColor, dot(lightDirection, vNormal));
 
-	float progress = fract(uProgress);
-
-	float time = abs(sin(uTime));
-
-	vec2 uvDisplaced1 = uv + rotate(3.1415296/4.)*uvDivided*progress*.1;
-	vec2 uvDisplaced2 = uv + rotate(3.1415296/4.)*uvDivided*(1. - progress)*.1;
-	vec4 img1 = texture2D(uTexture1, uvDisplaced1);
-	vec4 img2 = texture2D(uTexture2, uvDisplaced2);
-	gl_FragColor = mix(img1,img2,progress);
+	gl_FragColor = vec4(light*vColor, 1.0);
 }
