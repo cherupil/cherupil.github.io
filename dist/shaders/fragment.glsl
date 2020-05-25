@@ -1,15 +1,14 @@
 uniform float time;
+uniform float progress;
+uniform sampler2D texture;
+uniform vec4 resolution;
 
-varying vec3 vColor;
-varying vec3 vNormal;
+varying vec2 vUv;
 
 void main() {
-	vec3 light = vec3(0.);
-	vec3 skyColor = vec3(1.000, 1.000, 0.547);
-	vec3 groundColor = vec3(0.562, 0.275, 0.111);
-	vec3 lightDirection = normalize(vec3(0.0, -1.0, -1.0));
 
-	light = mix(skyColor, groundColor, dot(lightDirection, vNormal));
+	vec2 newUV = (vUv - vec2(0.5))*resolution.zw + vec2(0.5);
+	vec4 color = texture2D(texture, newUV);
 
-	gl_FragColor = vec4(light*vColor, 1.0);
+	gl_FragColor = color;
 }

@@ -1,4 +1,19 @@
-#container {
-  width: 100vw;
-  height: 100vh;
+body {
+  position: fixed;
+  background-color: #000;
+  outline: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
+/*
+#container
+	position: relative
+	height: 100vh
+	width: 100vw
+	canvas
+		position: absolute
+		top: 0
+		left: 0
+		transform: scale(2)
+		transform-origin: top left
+*/
